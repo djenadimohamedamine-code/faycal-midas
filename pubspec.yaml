@@ -1,4 +1,4 @@
-name: faycal_controller
+name: faycal_midas
 description: Midas Audio Controller pour Faycal Rahmani
 publish_to: 'none'
 version: 1.0.0
