@@ -1,0 +1,66 @@
+name: Faycal_Midas_Build
+on:
+  push:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  build_ios:
+    runs-on: macos-14
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.19.0'
+          channel: 'stable'
+
+      - name: Create_Project
+        run: flutter create --project-name=faycal_midas --platforms=ios .
+
+      - name: Build_iOS
+        run: |
+          flutter build ios --release --no-codesign
+          cd build/ios/iphoneos
+          mkdir -p Payload
+          cp -r Runner.app Payload/
+          zip -r FAYCAL_MIDAS.ipa Payload
+
+      - name: Upload_iOS
+        uses: actions/upload-artifact@v4
+        with:
+          name: faycal-midas-ios-ipa
+          path: build/ios/iphoneos/FAYCAL_MIDAS.ipa
+
+  build_android:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup_Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.19.0'
+          channel: 'stable'
+
+      - name: Create_Project
+        run: flutter create --project-name=faycal_midas --platforms=android .
+
+      - name: Build_Android
+        run: |
+          flutter build apk --release
+
+      - name: Upload_Android
+        uses: actions/upload-artifact@v4
+        with:
+          name: faycal-midas-android-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
