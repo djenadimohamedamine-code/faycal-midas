@@ -1,4 +1,4 @@
-name: Echorouk Sunlight Build
+name: Faycal Midas Build
 on:
   push:
     branches: [ "main", "master" ]
@@ -12,7 +12,8 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.19.0'
-      - run: flutter create . --project-name faycal_midas
+      - name: Create iOS platform folder
+        run: flutter create --platforms=ios --org com.faycal --project-name faycal_midas .
       - run: flutter pub get
       - run: flutter build ios --release --no-codesign
       - run: |
@@ -32,7 +33,8 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.19.0'
-      - run: flutter create . --project-name faycal_midas
+      - name: Create Android platform folder
+        run: flutter create --platforms=android --org com.faycal --project-name faycal_midas .
       - run: flutter pub get
       - run: flutter build apk --release
       - uses: actions/upload-artifact@v4
