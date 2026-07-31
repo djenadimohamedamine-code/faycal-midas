@@ -1,35 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'midas_m32.dart';
+import 'screens/main_screen.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.landscapeLeft,
-    DeviceOrientation.landscapeRight,
-  ]);
-  runApp(const FaycalMidasApp());
+  runApp(MyApp());
 }
 
-class FaycalMidasApp extends StatelessWidget {
-  const FaycalMidasApp({super.key});
-
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Faycal Midas',
+      title: 'Echorouk_Sunlight',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         brightness: Brightness.dark,
-        scaffoldBackgroundColor: const Color(0xFF121212),
-        colorScheme: ColorScheme.dark(
-          primary: Colors.orangeAccent,
-          secondary: Colors.orangeAccent,
-        ),
+        primarySwatch: Colors.amber,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: const Scaffold(
-        body: SafeArea(child: MidasM32Screen()),
-      ),
+      home: MainScreen(),
     );
   }
 }
